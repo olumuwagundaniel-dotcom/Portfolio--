@@ -1,0 +1,1 @@
+Image assets are named by purpose. They are used in index.html with object-fit: contain so supplied images are not forcibly cropped.

@@ -11,9 +11,13 @@ A responsive personal portfolio for:
 - Personal story
 - Selected work
 - Innovation Fair Hackathon achievement
+- Certificates gallery (ActivateX Frontend Development, ULES Fullstack Development, ULES Cybersecurity)
 - Leadership
 - Skills
 - Contact + feedback form
+
+## Certificates
+The Certificates section displays three certificates in consistent landscape preview frames. Previews use `object-fit: contain` to preserve the full certificate, and selecting a card opens the original image in a new tab.
 
 ## Images
 All image assets supplied in the conversation were preserved without forced cropping. The website uses `object-fit: contain` for screenshots and portrait/achievement images so important content remains visible.

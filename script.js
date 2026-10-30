@@ -34,18 +34,3 @@ window.addEventListener("scroll", updateProgress, {passive:true});
 updateProgress();
 
 document.getElementById("year").textContent = new Date().getFullYear();
-
-document.getElementById("feedbackForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const form = event.currentTarget;
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const message = form.message.value.trim();
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(
-    `Hello Daniel,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nSent from your portfolio website.`
-  );
-  const note = document.getElementById("formNote");
-  note.textContent = "Opening your email app…";
-  window.location.href = `mailto:olumuwagundaniel@gmail.com?subject=${subject}&body=${body}`;
-});

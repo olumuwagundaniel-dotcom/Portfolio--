@@ -35,17 +35,48 @@ updateProgress();
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-document.getElementById("feedbackForm").addEventListener("submit", (event) => {
+const feedbackForm = document.getElementById("feedbackForm");
+
+feedbackForm?.addEventListener("submit", async (event) => {
   event.preventDefault();
+
   const form = event.currentTarget;
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const message = form.message.value.trim();
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(
-    `Hello Daniel,\n\nName: ${name}\nEmail: ${email}\n\nMessage:\n${message}\n\nSent from your portfolio website.`
-  );
   const note = document.getElementById("formNote");
-  note.textContent = "Opening your email app…";
-  window.location.href = `mailto:olumuwagundaniel@gmail.com?subject=${subject}&body=${body}`;
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  const formData = {
+    name: form.elements["name"].value.trim(),
+    email: form.elements["email"].value.trim(),
+    message: form.elements["message"].value.trim(),
+    _subject: "New portfolio message",
+    _template: "table",
+    _captcha: "false"
+  };
+
+  note.textContent = "Sending your message…";
+  submitButton.disabled = true;
+
+  try {
+    const response = await fetch("https://formsubmit.co/ajax/olumuwagundaniel@gmail.com", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await response.json();
+
+    if (response.ok && result.success) {
+      note.textContent = "Thanks! Your message has been submitted. If this is your first time using the form, check your inbox to activate email delivery.";
+      form.reset();
+    } else {
+      throw new Error(result.message || "The message could not be sent.");
+    }
+  } catch (error) {
+    note.textContent = "Sorry, the message could not be sent right now. Please email me directly at olumuwagundaniel@gmail.com.";
+  } finally {
+    submitButton.disabled = false;
+  }
 });
